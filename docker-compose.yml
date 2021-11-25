@@ -6,9 +6,12 @@ services:
     networks:
       - pek_network
   postgres:
-    image: postgres:9.6
+    build:
+      context: .
+      dockerfile: PostgresDockerfile
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_PASSWORD=password
     volumes:
       - database_folder:/var/lib/postgresql/data/pgdata
     restart: always
@@ -33,7 +36,7 @@ services:
     environment:
       - RAILS_SERVE_STATIC_FILES=true
       - RAILS_ENV=production
-      - DATABASE_PASSWORD=
+      - DATABASE_PASSWORD=password
       - DATABASE_USER=postgres
       - DATABASE_NAME=pek-next
       - DATABASE_HOST=postgres
